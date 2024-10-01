@@ -54,17 +54,28 @@ public final class LayerGenerator {
 		
 		do {
 			LayerMap map = pipeline.execute(setting);
+			if(failedMaps.contains(map)) continue;
+			
 			byte[][] result = map.mapData();
 			
-			Predicate<int[]> filter = filters.stream().reduce(Predicate::or).orElse(x -> false);
+			//parallelize?
+//			int[] count = IntStream.range(0, setting.width() * setting.height())
+//				    .parallel()
+//				    .map(i -> result[0][i] & 0xff)
+//				    .collect(() -> new int[256], (arr, val) -> arr[val]++, (arr1, arr2) -> {
+//				        for (int i = 0; i < arr1.length; i++) {
+//				            arr1[i] += arr2[i];
+//				        }
+//				    });
 			
 			int[] count = new int[setting.width() * setting.height()];
 			for (int i = 0; i < setting.width() * setting.height(); i++) {
 				count[result[0][i] & 0xff]++;
 			}
-			if (filter.test(count))
-				continue;
-			return map;
+			
+			if (!filter.test(count))
+				return map;
+			failedMaps.add(map);
 		} while (true);
 
 	}
