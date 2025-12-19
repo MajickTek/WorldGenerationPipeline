@@ -1,30 +1,30 @@
 package com.mt.worldgen.pipeline;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Objects;
+import com.mt.worldgen.generator.LayerMap;
+import com.mt.worldgen.generator.LayerSetting;
 
-public class Pipeline<I,O> {
-    private final Handler<I,O> currentHandler;
-    
-    public Pipeline(Handler<I,O> currentHandler) {
-        this.currentHandler=Objects.requireNonNull(currentHandler);
-       
-    }
+public class Pipeline {
+  private final List<Stage> stages = new ArrayList<>();
 
-    
-    public <K> Pipeline<I,K> addHandler(Handler<O,K> newHandler) {
-        return new Pipeline<>(input -> {
-            
-            return Objects.requireNonNull(newHandler).process(currentHandler.process(input));
-        });
+  private Pipeline(Stage initialStage) {
+	  addStage(initialStage);
+  }
+  public Pipeline addStage(Stage stage) {
+    stages.add(stage);
+    return this;
+  }
+
+  public void execute(LayerMap initialInput, ProgressListener listener) {
+    ProcessingContext context = new ProcessingContext(initialInput, stages.size());
+    for(Stage stage: stages) {
+      stage.execute(context, listener);
     }
-    
-    public O execute(I input) {
-        return currentHandler.process(input);
-    }
-    
-    public static <I,O> Pipeline<I,O> create(Handler<I,O> currentHandler) {
-    	return new Pipeline<>(currentHandler);
-    }
-    
+  }
+  
+  public static Pipeline create(Stage initialStage) {
+	  return new Pipeline(initialStage);
+  }
 }

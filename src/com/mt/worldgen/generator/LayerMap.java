@@ -9,11 +9,11 @@ package com.mt.worldgen.generator;
 
 
 public record LayerMap(LayerSetting setting, byte[][] mapData) {
-	public int getHeight() {
+	public int height() {
 		return setting.height();
 	}
 	
-	public int getWidth() {
+	public int width() {
 		return setting.width();
 	}
 }

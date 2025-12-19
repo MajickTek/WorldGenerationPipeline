@@ -13,18 +13,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
 
-import com.mt.worldgen.generator.ground.CactusHandler;
-import com.mt.worldgen.generator.ground.FlowerHandler;
-import com.mt.worldgen.generator.ground.GroundNoiseHandler;
-import com.mt.worldgen.generator.ground.SandHandler;
-import com.mt.worldgen.generator.ground.StairsHandler;
-import com.mt.worldgen.generator.ground.TreeHandler;
-import com.mt.worldgen.generator.sky.CloudCactusHandler;
-import com.mt.worldgen.generator.sky.SkyNoiseHandler;
-import com.mt.worldgen.generator.sky.SkyStairsHandler;
-import com.mt.worldgen.generator.underground.IronOreHandler;
-import com.mt.worldgen.generator.underground.UndergroundNoiseHandler;
-import com.mt.worldgen.generator.underground.UndergroundStairsHandler;
+import com.mt.worldgen.generator.ground.CactusStage;
+import com.mt.worldgen.generator.ground.FlowerStage;
+import com.mt.worldgen.generator.ground.GroundNoiseStage;
+import com.mt.worldgen.generator.ground.SandStage;
+import com.mt.worldgen.generator.ground.StairsStage;
+import com.mt.worldgen.generator.ground.TreeStage;
+import com.mt.worldgen.generator.sky.CloudCactusStage;
+import com.mt.worldgen.generator.sky.SkyNoiseStage;
+import com.mt.worldgen.generator.sky.SkyStairsStage;
+import com.mt.worldgen.generator.underground.IronOreStage;
+import com.mt.worldgen.generator.underground.UndergroundNoiseStage;
+import com.mt.worldgen.generator.underground.UndergroundStairsStage;
 import com.mt.worldgen.pipeline.Pipeline;
 
 public final class TileMapGenerator {
@@ -47,22 +47,26 @@ public final class TileMapGenerator {
         int attempt = 1;
 
         while (true){
-
             LayerMap skyMap = skyGenerator.create(skyLayerSetting,
-    				List.of(count -> count[TileType.CLOUD.getID() & 0xff] < 2000,
-    						count -> count[TileType.STAIRSDOWN.getID()] < 2),
-    				Pipeline.create(new SkyNoiseHandler()).addHandler(new CloudCactusHandler())
-    						.addHandler(new SkyStairsHandler()));
-            LayerMap groundMap = groundGenerator.create(groundLayerSetting, List.of(count -> count[TileType.ROCK.getID() & 0xff] < 100,
-    				count -> count[TileType.SAND.getID() & 0xff] < 100, count -> count[TileType.GRASS.getID() & 0xff] < 100,
-    				count -> count[TileType.TREE.getID() & 0xff] < 100,
-    				count -> count[TileType.STAIRSDOWN.getID() & 0xff] < 2),
-    				Pipeline.create(new GroundNoiseHandler()).addHandler(new SandHandler())
-    						/* .addHandler(new DirtHandler()) */.addHandler(new TreeHandler())
-    						.addHandler(new FlowerHandler()).addHandler(new CactusHandler())
-    						.addHandler(new StairsHandler()));
+            		List.of(count -> count[TileType.CLOUD.getID() & 0xff] < 2000,
+            				count -> count[TileType.STAIRSDOWN.getID()] < 2),
+            		Pipeline.create(new SkyNoiseStage())
+            		.addStage(new CloudCactusStage())
+            		.addStage(new SkyStairsStage()));
             
-            
+            LayerMap groundMap = groundGenerator.create(groundLayerSetting,
+            		List.of(count -> count[TileType.ROCK.getID() & 0xff] < 100,
+            				count -> count[TileType.SAND.getID() & 0xff] < 100,
+            				count -> count[TileType.GRASS.getID() & 0xff] < 100,
+            				count -> count[TileType.TREE.getID() & 0xff] < 100,
+            				count -> count[TileType.STAIRSDOWN.getID() & 0xff] < 2),
+            		Pipeline.create(new GroundNoiseStage())
+            		.addStage(new SandStage())
+            		//.addStage(new DirtStage())
+            		.addStage(new TreeStage())
+            		.addStage(new FlowerStage())
+            		.addStage(new CactusStage())
+            		.addStage(new StairsStage()));
             
             List<Predicate<int[]>> underGroundFilters = new ArrayList<Predicate<int[]>>();
 
@@ -71,9 +75,9 @@ public final class TileMapGenerator {
 			if (undergroundLayerSetting.depth() < 3) {
 				underGroundFilters.add(count -> count[TileType.STAIRSDOWN.getID() & 0xff] < 2);
 			}
-            LayerMap undergroundMap = undergroundGenerator.create(undergroundLayerSetting, underGroundFilters, Pipeline.create(new UndergroundNoiseHandler())
-					.addHandler(new IronOreHandler()).addHandler(new UndergroundStairsHandler()));
 
+            LayerMap undergroundMap = undergroundGenerator.create(undergroundLayerSetting, underGroundFilters, Pipeline.create(new UndergroundNoiseStage()).addStage(new IronOreStage()).addStage(new UndergroundStairsStage()));
+            
             TileMapViewer.viewMap("SKY - Attempt: " + attempt, heightScaleFactor, widthScaleFactor, skyMap);
             TileMapViewer.viewMap("GROUND - Attempt: " + attempt, heightScaleFactor, widthScaleFactor, groundMap);
             TileMapViewer.viewMap("UNDERGROUND - Attempt: " + attempt, heightScaleFactor, widthScaleFactor, undergroundMap);
