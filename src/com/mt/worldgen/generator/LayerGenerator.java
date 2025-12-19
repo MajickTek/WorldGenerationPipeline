@@ -9,6 +9,7 @@ package com.mt.worldgen.generator;
 
 import javax.swing.*;
 
+import com.mt.worldgen.pipeline.ConsoleProgressMonitor;
 import com.mt.worldgen.pipeline.Pipeline;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public final class LayerGenerator {
 
 
 	public LayerMap create(LayerSetting setting, List<Predicate<int[]>> filters,
-			Pipeline<LayerSetting, LayerMap> pipeline) {
+			Pipeline pipeline) {
 
 		if (this.m_layerSetting.height() < 128) {
 			JOptionPane.showMessageDialog(null, "Height must be least 128", "Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -54,7 +55,9 @@ public final class LayerGenerator {
 		}
 		List<LayerMap> failedMaps = new ArrayList<>();
 		do {
-			LayerMap map = pipeline.execute(setting);
+			LayerMap map = new LayerMap(setting, new byte[1][1]);
+			pipeline.execute(map, new ConsoleProgressMonitor());
+			//LayerMap map = pipeline.execute(setting);
 			if(failedMaps.contains(map)) continue;
 			
 			byte[][] result = map.mapData();

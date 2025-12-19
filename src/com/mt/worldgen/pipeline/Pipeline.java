@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.mt.worldgen.generator.LayerMap;
+import com.mt.worldgen.generator.LayerSetting;
 
 public class Pipeline {
   private final List<Stage> stages = new ArrayList<>();
