@@ -37,7 +37,7 @@ public class SkyStairsStage implements Stage {
 		}
 		input.mapData()[0]=map;
 		context.advanceStage();
-		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Generated Stairs");
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(),"SKY", getName(), "Generated Stairs");
 	}
 
 	@Override

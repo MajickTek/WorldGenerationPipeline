@@ -41,7 +41,7 @@ public class SandStage implements Stage {
 		}
 		input.mapData()[0]=map;
 		context.advanceStage();
-		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Generated sand");
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(),"GROUND", getName(), "Generated sand");
 	}
 
 	@Override

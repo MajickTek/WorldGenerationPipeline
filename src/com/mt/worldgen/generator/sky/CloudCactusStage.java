@@ -32,7 +32,7 @@ public class CloudCactusStage implements Stage {
 		}
 		input.mapData()[0]=map;
 		context.advanceStage();
-		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Created cloud Cacti");
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), "SKY",getName(), "Created cloud Cacti");
 	}
 
 	@Override

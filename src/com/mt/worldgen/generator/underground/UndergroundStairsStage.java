@@ -38,7 +38,7 @@ public class UndergroundStairsStage implements Stage {
 		}
 		input.mapData()[0]=map;
 		context.advanceStage();
-		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Generated underground stairs");
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(),"UNDERGROUND", getName(), "Generated underground stairs");
 	}
 
 	@Override
