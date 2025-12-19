@@ -1,4 +1,5 @@
 public class ProcessingContext{
+  //TODO: make this class abstract?
   private Object input;
   //private O output;
   private int currentStageIndex = 0;
