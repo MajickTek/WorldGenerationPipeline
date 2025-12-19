@@ -52,7 +52,7 @@ public final class LayerGenerator {
 					JOptionPane.INFORMATION_MESSAGE);
 			return null;
 		}
-		List<LayeredMap> failedMaps = new ArrayList<>();
+		List<LayerMap> failedMaps = new ArrayList<>();
 		do {
 			LayerMap map = pipeline.execute(setting);
 			if(failedMaps.contains(map)) continue;
