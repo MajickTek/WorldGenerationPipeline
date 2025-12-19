@@ -2,19 +2,21 @@ package com.mt.worldgen.generator.sky;
 
 import com.mt.worldgen.generator.LayerMap;
 import com.mt.worldgen.generator.LayerRatio;
-import com.mt.worldgen.generator.LayerSetting;
 import com.mt.worldgen.generator.SampleGenerator;
 import com.mt.worldgen.generator.TileType;
-import com.mt.worldgen.pipeline.Handler;
+import com.mt.worldgen.pipeline.ProcessingContext;
+import com.mt.worldgen.pipeline.ProgressListener;
+import com.mt.worldgen.pipeline.Stage;
 
-public class SkyNoiseHandler implements Handler<LayerSetting, LayerMap> {
+public class SkyNoiseStage implements Stage {
 
 	@Override
-	public LayerMap process(LayerSetting input) {
-		SampleGenerator noise1 = new SampleGenerator(input, 8);
-		SampleGenerator noise2 = new SampleGenerator(input, 8);
-		final int w = input.width();
-		final int h = input.height();
+	public void execute(ProcessingContext context, ProgressListener listener) {
+		LayerMap input = context.getMap();
+		SampleGenerator noise1 = new SampleGenerator(input.setting(), 8);
+		SampleGenerator noise2 = new SampleGenerator(input.setting(), 8);
+		final int w = input.getWidth();
+		final int h = input.getHeight();
 		
 		byte[] map = new byte[w * h];
 		byte[] data = new byte[w * h];
@@ -43,7 +45,13 @@ public class SkyNoiseHandler implements Handler<LayerSetting, LayerMap> {
 				}
 			}
 		}
-		return new LayerMap(input, new byte[][] {map,data});
+		input.mapData()[0]=map;
+		input.mapData()[1]=data;
+	}
+
+	@Override
+	public String getName() {
+		return "Sky Noise";
 	}
 
 }
