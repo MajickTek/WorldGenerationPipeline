@@ -76,7 +76,7 @@ public final class LayerGenerator {
 			for (int i = 0; i < setting.width() * setting.height(); i++) {
 				count[result[0][i] & 0xff]++;
 			}
-			Predicate<int[]> filter = filters.stream().reduce(x->true, Predicate::and);
+			Predicate<int[]> filter = filters.stream().reduce(_->true, Predicate::and);
 			if (!filter.test(count))
 				return map;
 			failedMaps.add(map);

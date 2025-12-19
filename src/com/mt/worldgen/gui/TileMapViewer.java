@@ -78,7 +78,7 @@ public class TileMapViewer
         JMenuItem skyMenuItem = new JMenuItem("Sky");
         JMenuItem undergroundMenuItem = new JMenuItem("Underground");
         
-        groundMenuItem.addActionListener(l -> {
+        groundMenuItem.addActionListener(_ -> {
         	LayerSetting groundLayerSetting = new LayerSetting(128, 128, 16, 0, random);
         	LayerGenerator groundGenerator = new LayerGenerator(groundLayerSetting);
         	LayerMap groundMap = groundGenerator.create(groundLayerSetting,
@@ -97,7 +97,7 @@ public class TileMapViewer
         	image = makeMap(4, 4, groundMap);
         });
         
-        skyMenuItem.addActionListener(l -> {
+        skyMenuItem.addActionListener(_ -> {
         	LayerSetting skyLayerSetting = new LayerSetting(128, 128, 16, 0, random);
         	LayerGenerator skyGenerator = new LayerGenerator(skyLayerSetting);
         	LayerMap skyMap = skyGenerator.create(skyLayerSetting,
@@ -109,7 +109,7 @@ public class TileMapViewer
         	image = makeMap(4,4,skyMap);
         });
         
-        undergroundMenuItem.addActionListener(l -> {
+        undergroundMenuItem.addActionListener(_ -> {
         	LayerSetting undergroundLayerSetting = new LayerSetting(128, 128, 16, 0, random);
         	LayerGenerator undergroundGenerator = new LayerGenerator(undergroundLayerSetting);
         	List<Predicate<int[]>> underGroundFilters = new ArrayList<Predicate<int[]>>();
@@ -151,8 +151,7 @@ public class TileMapViewer
         Graphics graphics = null;
         Graphics2D g2d = null;
         Color background = Color.BLACK;
-        Random rand = new Random();
-
+        
         // Variables for counting frames per seconds
         int fps = 0;
         int frames = 0;
