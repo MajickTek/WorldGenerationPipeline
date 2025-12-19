@@ -55,7 +55,7 @@ public final class LayerGenerator {
 		}
 		List<LayerMap> failedMaps = new ArrayList<>();
 		do {
-			LayerMap map = new LayerMap(setting, new byte[1][1]);
+			LayerMap map = new LayerMap(setting, new byte[2][2]);
 			pipeline.execute(map, new ConsoleProgressMonitor());
 			//LayerMap map = pipeline.execute(setting);
 			if(failedMaps.contains(map)) continue;
