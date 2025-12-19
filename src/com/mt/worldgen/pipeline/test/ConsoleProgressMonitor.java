@@ -1,3 +1,5 @@
+package com.mt.worldgen.pipeline.test;
+
 import java.text.MessageFormat;
 public class ConsoleProgressMonitor implements ProgressListener {
   @Override

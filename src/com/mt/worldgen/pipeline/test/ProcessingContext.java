@@ -1,24 +1,33 @@
-public class ProcessingContext{
-  //TODO: make this class abstract?
-  private Object input;
-  //private O output;
-  private int currentStageIndex = 0;
-  private final int totalStages;
+package com.mt.worldgen.pipeline.test;
 
-  //other data stored here?
+public class ProcessingContext {
+	// TODO: make this class abstract?
+	private Object input;
+	// private O output;
+	private int currentStageIndex = 0;
+	private final int totalStages;
 
-  public ProcessingContext(Object input, int totalStages) {
-    this.input = input;
-    this.totalStages = totalStages;
-  }
+	// other data stored here?
 
-  public void advanceStage() {
-    this.currentStageIndex++;
-  }
+	public ProcessingContext(Object input, int totalStages) {
+		this.input = input;
+		this.totalStages = totalStages;
+	}
 
-  public int getCurrentProgress() {
-    return (int) ((double) currentStageIndex / totalStages * 100);
-  }
+	public void advanceStage() {
+		this.currentStageIndex++;
+	}
 
-  //maybe add other getters/setters for other included data
+	public int getCurrentProgress() {
+		return (int) ((double) currentStageIndex / totalStages * 100);
+	}
+
+	public int getCurrentStageIndex() {
+		return currentStageIndex;
+	}
+	
+	public int getTotalStages() {
+		return totalStages;
+	}
+	// maybe add other getters/setters for other included data
 }

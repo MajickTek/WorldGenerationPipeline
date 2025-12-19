@@ -1,3 +1,5 @@
+package com.mt.worldgen.pipeline.test;
+
 public class SampleStage implements Stage {
   @Override
   public String getName() {
@@ -10,6 +12,6 @@ public class SampleStage implements Stage {
         System.out.println("This is a sample step");
         
         context.advanceStage();
-        listener.onProgressUpdate(context.currentStageIndex, context.totalStages, getName(), "Completed");
+        listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Completed");
   }
 }
