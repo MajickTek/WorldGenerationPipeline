@@ -2,31 +2,33 @@ package com.mt.worldgen.generator.underground;
 
 import com.mt.worldgen.generator.LayerMap;
 import com.mt.worldgen.generator.LayerRatio;
-import com.mt.worldgen.generator.LayerSetting;
 import com.mt.worldgen.generator.SampleGenerator;
 import com.mt.worldgen.generator.TileType;
-import com.mt.worldgen.pipeline.Handler;
+import com.mt.worldgen.pipeline.ProcessingContext;
+import com.mt.worldgen.pipeline.ProgressListener;
+import com.mt.worldgen.pipeline.Stage;
 
-public class UndergroundNoiseHandler implements Handler<LayerSetting, LayerMap> {
+public class UndergroundNoiseStage implements Stage {
 
 	@Override
-	public LayerMap process(LayerSetting input) {
-		final int w = input.width();
-		final int h = input.height();
-		SampleGenerator mnoise1 = new SampleGenerator(input, 16);
-		SampleGenerator mnoise2 = new SampleGenerator(input, 16);
-		SampleGenerator mnoise3 = new SampleGenerator(input, 16);
+	public void execute(ProcessingContext context, ProgressListener listener) {
+		LayerMap input = context.getMap();
+		final int w = input.getWidth();
+		final int h = input.getHeight();
+		SampleGenerator mnoise1 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator mnoise2 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator mnoise3 = new SampleGenerator(input.setting(), 16);
 
-		SampleGenerator nnoise1 = new SampleGenerator(input, 16);
-		SampleGenerator nnoise2 = new SampleGenerator(input, 16);
-		SampleGenerator nnoise3 = new SampleGenerator(input, 16);
+		SampleGenerator nnoise1 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator nnoise2 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator nnoise3 = new SampleGenerator(input.setting(), 16);
 
-		SampleGenerator wnoise1 = new SampleGenerator(input, 16);
-		SampleGenerator wnoise2 = new SampleGenerator(input, 16);
-		SampleGenerator wnoise3 = new SampleGenerator(input, 16);
+		SampleGenerator wnoise1 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator wnoise2 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator wnoise3 = new SampleGenerator(input.setting(), 16);
 
-		SampleGenerator noise1 = new SampleGenerator(input, 32);
-		SampleGenerator noise2 = new SampleGenerator(input, 32);
+		SampleGenerator noise1 = new SampleGenerator(input.setting(), 32);
+		SampleGenerator noise2 = new SampleGenerator(input.setting(), 32);
 		
 		byte[] map = new byte[w * h];
 		byte[] data = new byte[w * h];
@@ -57,8 +59,8 @@ public class UndergroundNoiseHandler implements Handler<LayerSetting, LayerMap> 
 				dist = dist * dist * dist * dist;
 				val = val + 1 - dist * 20;
 
-				if (val > LayerRatio.UNDERGROUND.NOISE_LIQUID_HIGHER && wval < -2.0 + (input.depth()) / 2 * 3) {
-					if (input.depth() > LayerRatio.UNDERGROUND.DEPTH_LAVA)
+				if (val > LayerRatio.UNDERGROUND.NOISE_LIQUID_HIGHER && wval < -2.0 + (input.setting().depth()) / 2 * 3) {
+					if (input.setting().depth() > LayerRatio.UNDERGROUND.DEPTH_LAVA)
 						map[i] = TileType.LAVA.getID();
 					else
 						map[i] = TileType.WATER.getID();
@@ -71,7 +73,13 @@ public class UndergroundNoiseHandler implements Handler<LayerSetting, LayerMap> 
 				}
 			}
 		}
-		return new LayerMap(input, new byte[][] {map,data});
+		input.mapData()[0]=map;
+		input.mapData()[1]=data;
+	}
+
+	@Override
+	public String getName() {
+		return "Underground Noise";
 	}
 
 }

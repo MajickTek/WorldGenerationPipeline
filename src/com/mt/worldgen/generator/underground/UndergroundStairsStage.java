@@ -5,12 +5,15 @@ import java.util.Random;
 import com.mt.worldgen.generator.LayerMap;
 import com.mt.worldgen.generator.LayerRatio;
 import com.mt.worldgen.generator.TileType;
-import com.mt.worldgen.pipeline.Handler;
+import com.mt.worldgen.pipeline.ProcessingContext;
+import com.mt.worldgen.pipeline.ProgressListener;
+import com.mt.worldgen.pipeline.Stage;
 
-public class UndergroundStairsHandler implements Handler<LayerMap, LayerMap> {
+public class UndergroundStairsStage implements Stage {
 
 	@Override
-	public LayerMap process(LayerMap input) {
+	public void execute(ProcessingContext context, ProgressListener listener) {
+		LayerMap input = context.getMap();
 		final Random random = input.setting().random();
 		final int w = input.setting().width();
 		final int h = input.setting().height();
@@ -33,7 +36,12 @@ public class UndergroundStairsHandler implements Handler<LayerMap, LayerMap> {
 					break;
 			}
 		}
-		return new LayerMap(input.setting(), new byte[][] {map,input.mapData()[1].clone()});
+		input.mapData()[0]=map;
+	}
+
+	@Override
+	public String getName() {
+		return "Underground Stairs";
 	}
 
 }
