@@ -1,12 +1,12 @@
-public class ProcessingContext<I,O> {
-  private I input;
-  private O output;
+public class ProcessingContext{
+  private Object input;
+  //private O output;
   private int currentStageIndex = 0;
   private final int totalStages;
 
   //other data stored here?
 
-  public ProcessingContext(I input, int totalStages) {
+  public ProcessingContext(Object input, int totalStages) {
     this.input = input;
     this.totalStages = totalStages;
   }
