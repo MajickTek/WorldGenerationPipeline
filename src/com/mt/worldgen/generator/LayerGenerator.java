@@ -12,6 +12,7 @@ import javax.swing.*;
 import com.mt.worldgen.pipeline.Pipeline;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.function.Predicate;
 
 public final class LayerGenerator {
@@ -51,7 +52,7 @@ public final class LayerGenerator {
 					JOptionPane.INFORMATION_MESSAGE);
 			return null;
 		}
-		
+		List<LayeredMap> failedMaps = new ArrayList<>();
 		do {
 			LayerMap map = pipeline.execute(setting);
 			if(failedMaps.contains(map)) continue;
@@ -72,7 +73,7 @@ public final class LayerGenerator {
 			for (int i = 0; i < setting.width() * setting.height(); i++) {
 				count[result[0][i] & 0xff]++;
 			}
-			
+			Predicate<int[]> filter = filters.stream().reduce(x->true, Predicate::and);
 			if (!filter.test(count))
 				return map;
 			failedMaps.add(map);
