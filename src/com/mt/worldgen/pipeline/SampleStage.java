@@ -1,4 +1,4 @@
-package com.mt.worldgen.pipeline.test;
+package com.mt.worldgen.pipeline;
 
 public class SampleStage implements Stage {
   @Override

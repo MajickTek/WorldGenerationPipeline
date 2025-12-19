@@ -1,4 +1,4 @@
-package com.mt.worldgen.pipeline.test;
+package com.mt.worldgen.pipeline;
 
 import java.text.MessageFormat;
 public class ConsoleProgressMonitor implements ProgressListener {

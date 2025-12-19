@@ -1,15 +1,17 @@
-package com.mt.worldgen.pipeline.test;
+package com.mt.worldgen.pipeline;
+
+import com.mt.worldgen.generator.LayerMap;
 
 public class ProcessingContext {
 	// TODO: make this class abstract?
-	private Object input;
+	private LayerMap input;
 	// private O output;
 	private int currentStageIndex = 0;
 	private final int totalStages;
 
 	// other data stored here?
 
-	public ProcessingContext(Object input, int totalStages) {
+	public ProcessingContext(LayerMap input, int totalStages) {
 		this.input = input;
 		this.totalStages = totalStages;
 	}
@@ -28,6 +30,10 @@ public class ProcessingContext {
 	
 	public int getTotalStages() {
 		return totalStages;
+	}
+	
+	public LayerMap getMap() {
+		return input;
 	}
 	// maybe add other getters/setters for other included data
 }
