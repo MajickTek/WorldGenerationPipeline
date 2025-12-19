@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import com.mt.worldgen.pipeline.ConsoleProgressMonitor;
 import com.mt.worldgen.pipeline.Pipeline;
+import com.mt.worldgen.pipeline.ProgressListener;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -29,8 +30,11 @@ public final class LayerGenerator {
 	}
 
 
+	public LayerMap create(LayerSetting setting, List<Predicate<int[]>> filters, Pipeline pipeline) {
+		return create(setting,filters,pipeline, new ConsoleProgressMonitor());
+	}
 	public LayerMap create(LayerSetting setting, List<Predicate<int[]>> filters,
-			Pipeline pipeline) {
+			Pipeline pipeline, ProgressListener listener) {
 
 		if (this.m_layerSetting.height() < 128) {
 			JOptionPane.showMessageDialog(null, "Height must be least 128", "Warning", JOptionPane.INFORMATION_MESSAGE);
@@ -56,7 +60,7 @@ public final class LayerGenerator {
 		List<LayerMap> failedMaps = new ArrayList<>();
 		do {
 			LayerMap map = new LayerMap(setting, new byte[2][2]);
-			pipeline.execute(map, new ConsoleProgressMonitor());
+			pipeline.execute(map, listener);
 			//LayerMap map = pipeline.execute(setting);
 			if(failedMaps.contains(map)) continue;
 			

@@ -53,7 +53,8 @@ public class TileMapViewer
         JFrame app = new JFrame("Tilemap Viewer");
         app.setIgnoreRepaint( true );
         app.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-
+        app.setLayout(new BorderLayout());
+        
         Canvas canvas = new Canvas();
         canvas.setIgnoreRepaint(true);
         canvas.setSize(WIDTH, HEIGHT);
@@ -62,6 +63,7 @@ public class TileMapViewer
         
         jsp.setViewportView(canvas);
         
+        JProgressBar jpb = new JProgressBar(0, 100);
         JMenuBar jmb = new JMenuBar();
         
         
@@ -93,7 +95,7 @@ public class TileMapViewer
             		.addStage(new TreeStage())
             		.addStage(new FlowerStage())
             		.addStage(new CactusStage())
-            		.addStage(new StairsStage()));
+            		.addStage(new StairsStage()), new JProgressBarMonitor(jpb));
         	image = makeMap(4, 4, groundMap);
         });
         
@@ -105,7 +107,7 @@ public class TileMapViewer
             				count -> count[TileType.STAIRSDOWN.getID()] < 2),
             		Pipeline.create(new SkyNoiseStage())
             		.addStage(new CloudCactusStage())
-            		.addStage(new SkyStairsStage()));
+            		.addStage(new SkyStairsStage()), new JProgressBarMonitor(jpb));
         	image = makeMap(4,4,skyMap);
         });
         
@@ -122,7 +124,7 @@ public class TileMapViewer
 					underGroundFilters,
 					Pipeline.create(new UndergroundNoiseStage())
 					.addStage(new IronOreStage())
-					.addStage(new UndergroundStairsStage()));
+					.addStage(new UndergroundStairsStage()), new JProgressBarMonitor(jpb));
 			image=makeMap(4,4,undergroundMap);
         });
         generateMenu.add(groundMenuItem);
@@ -131,7 +133,9 @@ public class TileMapViewer
         
         jmb.add(generateMenu);
         app.setJMenuBar(jmb);
-        app.add(jsp);
+        
+        app.add(jpb,BorderLayout.NORTH);
+        app.add(jsp,BorderLayout.CENTER);
         app.pack();
         app.setVisible(true);
 
