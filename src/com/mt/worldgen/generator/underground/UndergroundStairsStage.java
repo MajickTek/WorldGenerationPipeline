@@ -13,7 +13,7 @@ public class UndergroundStairsStage implements Stage {
 
 	@Override
 	public void execute(ProcessingContext context, ProgressListener listener) {
-		LayerMap input = context.getMap();
+		final LayerMap input = context.getMap();
 		final Random random = input.setting().random();
 		final int w = input.setting().width();
 		final int h = input.setting().height();

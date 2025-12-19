@@ -12,7 +12,7 @@ public class SkyNoiseStage implements Stage {
 
 	@Override
 	public void execute(ProcessingContext context, ProgressListener listener) {
-		LayerMap input = context.getMap();
+		final LayerMap input = context.getMap();
 		SampleGenerator noise1 = new SampleGenerator(input.setting(), 8);
 		SampleGenerator noise2 = new SampleGenerator(input.setting(), 8);
 		final int w = input.getWidth();

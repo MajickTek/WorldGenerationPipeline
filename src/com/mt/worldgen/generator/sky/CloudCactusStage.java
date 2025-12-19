@@ -13,7 +13,7 @@ public class CloudCactusStage implements Stage {
 
 	@Override
 	public void execute(ProcessingContext context, ProgressListener listener) {
-		LayerMap input = context.getMap();
+		final LayerMap input = context.getMap();
 		final Random random = input.setting().random();
 		final int w = input.getWidth();
 		final int h = input.getHeight();

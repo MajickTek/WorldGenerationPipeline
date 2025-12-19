@@ -12,7 +12,7 @@ public class GroundNoiseStage implements Stage {
 
 	@Override
 	public void execute(ProcessingContext context, ProgressListener listener) {
-		LayerMap input = context.getMap();
+		final LayerMap input = context.getMap();
 		SampleGenerator mnoise1 = new SampleGenerator(input.setting(), 16);
 		SampleGenerator mnoise2 = new SampleGenerator(input.setting(), 16);
 		SampleGenerator mnoise3 = new SampleGenerator(input.setting(), 16);
