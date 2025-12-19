@@ -2,24 +2,26 @@ package com.mt.worldgen.generator.ground;
 
 import com.mt.worldgen.generator.LayerMap;
 import com.mt.worldgen.generator.LayerRatio;
-import com.mt.worldgen.generator.LayerSetting;
 import com.mt.worldgen.generator.SampleGenerator;
 import com.mt.worldgen.generator.TileType;
-import com.mt.worldgen.pipeline.Handler;
+import com.mt.worldgen.pipeline.ProcessingContext;
+import com.mt.worldgen.pipeline.ProgressListener;
+import com.mt.worldgen.pipeline.Stage;
 
-public class GroundNoiseHandler implements Handler<LayerSetting, LayerMap> {
+public class GroundNoiseStage implements Stage {
 
 	@Override
-	public LayerMap process(LayerSetting input) {
-		SampleGenerator mnoise1 = new SampleGenerator(input, 16);
-		SampleGenerator mnoise2 = new SampleGenerator(input, 16);
-		SampleGenerator mnoise3 = new SampleGenerator(input, 16);
+	public void execute(ProcessingContext context, ProgressListener listener) {
+		LayerMap input = context.getMap();
+		SampleGenerator mnoise1 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator mnoise2 = new SampleGenerator(input.setting(), 16);
+		SampleGenerator mnoise3 = new SampleGenerator(input.setting(), 16);
 
-		SampleGenerator noise1 = new SampleGenerator(input, 32);
-		SampleGenerator noise2 = new SampleGenerator(input, 32);
+		SampleGenerator noise1 = new SampleGenerator(input.setting(), 32);
+		SampleGenerator noise2 = new SampleGenerator(input.setting(), 32);
 		
-		final int w = input.width();
-		final int h = input.height();
+		final int w = input.setting().width();
+		final int h = input.setting().height();
 		
 		byte[] map = new byte[w * h];
 		byte[] data = new byte[w * h];
@@ -51,7 +53,13 @@ public class GroundNoiseHandler implements Handler<LayerSetting, LayerMap> {
 				}
 			}
 		}
-		return new LayerMap(input, new byte[][] {map,data});
+		input.mapData()[0]=map;
+		input.mapData()[1]=data;
+	}
+
+	@Override
+	public String getName() {
+		return "Ground Noise";
 	}
 
 }
