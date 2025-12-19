@@ -15,8 +15,8 @@ public class TreeStage implements Stage {
 	public void execute(ProcessingContext context, ProgressListener listener) {
 		final LayerMap input = context.getMap();
 		final Random random = input.setting().random();
-		final int w = input.getWidth();
-		final int h = input.getHeight();
+		final int w = input.width();
+		final int h = input.height();
 		byte[] map = input.mapData()[0].clone();
 		
 		for (int i = 0; i < w * h / LayerRatio.GROUND.RATIO_TREE; i++) {

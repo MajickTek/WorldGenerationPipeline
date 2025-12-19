@@ -13,8 +13,8 @@ public class UndergroundNoiseStage implements Stage {
 	@Override
 	public void execute(ProcessingContext context, ProgressListener listener) {
 		final LayerMap input = context.getMap();
-		final int w = input.getWidth();
-		final int h = input.getHeight();
+		final int w = input.width();
+		final int h = input.height();
 		SampleGenerator mnoise1 = new SampleGenerator(input.setting(), 16);
 		SampleGenerator mnoise2 = new SampleGenerator(input.setting(), 16);
 		SampleGenerator mnoise3 = new SampleGenerator(input.setting(), 16);

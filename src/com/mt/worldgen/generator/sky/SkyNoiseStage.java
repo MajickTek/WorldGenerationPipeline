@@ -15,8 +15,8 @@ public class SkyNoiseStage implements Stage {
 		final LayerMap input = context.getMap();
 		SampleGenerator noise1 = new SampleGenerator(input.setting(), 8);
 		SampleGenerator noise2 = new SampleGenerator(input.setting(), 8);
-		final int w = input.getWidth();
-		final int h = input.getHeight();
+		final int w = input.width();
+		final int h = input.height();
 		
 		byte[] map = new byte[w * h];
 		byte[] data = new byte[w * h];

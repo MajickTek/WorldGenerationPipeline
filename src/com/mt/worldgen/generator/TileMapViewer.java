@@ -14,8 +14,8 @@ import java.awt.image.BufferedImage;
 public final class TileMapViewer {
 
     public static void viewMap(String name, int heightScaleFactor, int widthScaleFactor, LayerMap layerMap){
-        int width = layerMap.getWidth();
-        int height = layerMap.getHeight();
+        int width = layerMap.width();
+        int height = layerMap.height();
 
         byte[] mapData = layerMap.mapData()[0];
 
