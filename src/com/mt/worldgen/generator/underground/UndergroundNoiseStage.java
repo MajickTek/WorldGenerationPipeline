@@ -75,6 +75,8 @@ public class UndergroundNoiseStage implements Stage {
 		}
 		input.mapData()[0]=map;
 		input.mapData()[1]=data;
+		context.advanceStage();
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Completed Underground base terrain");
 	}
 
 	@Override

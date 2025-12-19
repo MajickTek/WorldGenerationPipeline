@@ -31,6 +31,8 @@ public class CloudCactusStage implements Stage {
 			map[x + y * w] = TileType.CLOUDCACTUS.getID();
 		}
 		input.mapData()[0]=map;
+		context.advanceStage();
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Created cloud Cacti");
 	}
 
 	@Override

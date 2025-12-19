@@ -35,6 +35,8 @@ public class StairsStage implements Stage {
 				break;
 		}
 		input.mapData()[0]=map;
+		context.advanceStage();
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Generated stairs");
 	}
 
 	@Override

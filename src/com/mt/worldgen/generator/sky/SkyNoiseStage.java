@@ -47,6 +47,8 @@ public class SkyNoiseStage implements Stage {
 		}
 		input.mapData()[0]=map;
 		input.mapData()[1]=data;
+		context.advanceStage();
+		listener.onProgressUpdate(context.getCurrentStageIndex(), context.getTotalStages(), getName(), "Completed base Sky terrain");
 	}
 
 	@Override
